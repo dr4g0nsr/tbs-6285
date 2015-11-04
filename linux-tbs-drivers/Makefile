@@ -1,4 +1,6 @@
-BUILD_DIR := $(shell pwd)/v4l
+CURRENT_DIR := $(shell pwd)
+BUILD_DIR := $(CURRENT_DIR)/v4l
+BITS=$(shell uname -m)
 TMP ?= /tmp
 
 ifeq ($(EDITOR),)
@@ -10,6 +12,18 @@ ifeq ($(EDITOR),)
 endif
 
 all:
+	@echo "Build TBS drivers for v4l $(BITS)"
+	@cd $(CURRENT_DIR) && v4l/tbs-$(BITS).sh
+	$(MAKE) -C $(BUILD_DIR)
+
+build64:
+	cd $(CURRENT_DIR) && v4l/tbs-x86_64.sh	
+
+build32:
+	cd $(CURRENT_DIR) && v4l/tbs-x86.sh
+
+build32v3:
+	cd $(CURRENT_DIR) && v4l/tbs-x86_r3.sh
 
 install:
 	$(MAKE) -C $(BUILD_DIR) install
