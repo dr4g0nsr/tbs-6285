@@ -205,7 +205,7 @@ int tbs_ci_poll_slot_status(struct dvb_ca_en50221 *ca,
 	data &= 1;
 
 	if (state->status != data){
-		TBS_PCIE_WRITE(TBS_CI_BASE(state->nr), 0x08, data);
+		TBS_PCIE_WRITE(TBS_CI_BASE(state->nr), 0x08, !data);
 		msleep(300);
 		state->status = data;
 	}
